@@ -39,31 +39,27 @@ $(document).ready(function () {
   ];
   var userAnswer = "";
   var score = 0;
+  var intervalID;
 
   //Functions
 
-  function startTime() {
-    time--;
-    // console.log(time);
-    if (time === 0) {
-      clearInterval();
-    }
-
-    $("#timer").text(time);
-  }
-
   function endTimer() {
     if (time === 0) {
-      clearInterval(startTime);
+      clearInterval(intervalID);
     }
   }
 
   //Click Event Handling
 
+  //Pause Timer Click
+  $("#pause-timer").on("click", function () {
+    clearInterval(intervalID);
+  });
+
   //Answer Click
   $(".answer-button").on("click", function () {
     userAnswer = $(this).val();
-    console.log(userAnswer);
+    // console.log(userAnswer);
 
     if (userAnswer === questions[3].answer) {
       score += 10;
@@ -77,14 +73,22 @@ $(document).ready(function () {
     }
   });
 
-  //Start Click
+  //Start Button Click Event
   $("#start-button").on("click", function () {
     $("#quiz").attr("class", "d-block");
     $("#start-bar").attr("class", "d-none");
-    setInterval(startTime, 1000);
+
+    intervalID = setInterval(function () {
+      $("#timer").text(time);
+      time--;
+    }, 1000);
+
+    // if (time <= 0) {
+    //   clearInterval(intervalID);
+    // }
 
     for (var i = 0; i < questions.length; i++) {
-      console.log(questions[i]);
+      // console.log(questions[i]);
       $("#question-header").text(questions[i].question);
       $("#a-answer").text(questions[i].a);
       $("#b-answer").text(questions[i].b);
