@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Javascript Quiz</title>
+
+    <!-- Bootstrap CDN-->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <!-- jQuery Link-->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2">
+          <!--Highscore Card-->
+          <h4>High Scores:</h4>
+          <p id="score"></p>
+        </div>
+        <div class="col-md-10">
+          <!-- Timer -->
+          <p id="timer" class="text-right"></p>
+        </div>
+      </div>
+      <br />
+      <div class="row text-center">
+        <div id="start-bar" class="col-md-12">
+          <h1>Javascript Quiz</h1>
+          <button id="start-button" class="btn btn-primary text-center">
+            Start Quiz!
+          </button>
+        </div>
+      </div>
+      <br />
+      <div id="quiz" class="row d-none">
+        <div class="offset-md-3 col-md-8 px-5">
+          <!-- Quiz Body-->
+          <h1>Javascript Quiz</h1>
+          <h3 id="question-header"></h3>
+          <li class="pt-2">
+            <button
+              id="a-answer"
+              value="a"
+              class="btn btn-info answer-button"
+            ></button>
+          </li>
+          <li class="pt-2">
+            <button
+              id="b-answer"
+              value="b"
+              class="btn btn-info answer-button"
+            ></button>
+          </li>
+          <li class="pt-2">
+            <button
+              id="c-answer"
+              value="c"
+              class="btn btn-info answer-button"
+            ></button>
+          </li>
+          <li class="pt-2">
+            <button
+              id="d-answer"
+              value="d"
+              class="btn btn-info answer-button"
+            ></button>
+          </li>
+          <hr />
+          <p id="result"></p>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js" type="text/Javascript"></script>
+  </body>
+</html>
