@@ -1,10 +1,12 @@
 $(document).ready(function () {
   //Variables
 
-  var time = 70;
+  var time = 60;
+  var score = 0;
+  var counter = 0;
   var questions = [
     {
-      question: "Which of the following Syntax is correct?",
+      question: "Which of the following HTML syntax is correct?",
       a: "a) <h1>This is a heading<h1>",
       b: "b) </h1>This is a heading<h1>",
       c: "c) <h1>This is a heading</h1>",
@@ -37,16 +39,15 @@ $(document).ready(function () {
       answer: "a",
     },
   ];
+  var highScores = JSON.parse(localStorage.getItem("#score")) || [];
   var userAnswer = "";
-  var score = 0;
+  var userName = "";
   var intervalID;
 
   //Functions
 
   function endTimer() {
-    if (time === 0) {
-      clearInterval(intervalID);
-    }
+    clearInterval(intervalID);
   }
 
   //Click Event Handling
@@ -59,18 +60,81 @@ $(document).ready(function () {
   //Answer Click
   $(".answer-button").on("click", function () {
     userAnswer = $(this).val();
-    // console.log(userAnswer);
+    handleAnswer();
+    counter++;
+    appendQuestion();
+    handleCounter();
+  });
 
-    if (userAnswer === questions[3].answer) {
+  function handleAnswer() {
+    if (userAnswer === questions[counter].answer) {
       score += 10;
       $("#result").text("Correct!");
       $("#score").text(score);
-    } else {
+    } else if (userAnswer !== questions[counter].answer) {
       score -= 5;
       time -= 15;
       $("#result").text("Wrong!");
       $("#score").text(score);
     }
+  }
+
+  function appendQuestion() {
+    if (counter === 4) {
+      return;
+    }
+    $("#question-header").text(questions[counter].question);
+    $("#a-answer").text(questions[counter].a);
+    $("#b-answer").text(questions[counter].b);
+    $("#c-answer").text(questions[counter].c);
+    $("#d-answer").text(questions[counter].d);
+  }
+
+  function saveHighScore() {}
+
+  function handleCounter() {
+    if (counter === 4) {
+      $("#quiz").attr("class", "d-none");
+      $("form").attr("class", "d-block");
+      endTimer();
+      return;
+    }
+  }
+
+  function handleTimer() {
+    time--;
+    $("#timer").text(time);
+
+    if (time <= 0) {
+      endTimer();
+    }
+  }
+
+  function quizInit() {
+    var time = 60;
+    var score = 0;
+    var counter = 0;
+    var userAnswer = "";
+    var userName = "";
+
+    $("#quiz").attr("class", "d-none");
+    $("#start-bar").attr("class", "d-block");
+    $("form").attr("class", "d-none");
+  }
+
+  function showScore() {
+    var tRow = $("<tr>");
+    var userTd = $("<td>").text(userName);
+    var scoreTd = $("<td>").text(score);
+
+    tRow.append(userTd, scoreTd);
+
+    $("#quiz-score").prepend(tRow);
+  }
+
+  //Reset Button Click Event
+  $("#reset-quiz").on("click", function () {
+    quizInit();
   });
 
   //Start Button Click Event
@@ -78,57 +142,22 @@ $(document).ready(function () {
     $("#quiz").attr("class", "d-block");
     $("#start-bar").attr("class", "d-none");
 
-    intervalID = setInterval(function () {
-      $("#timer").text(time);
-      time--;
-    }, 1000);
+    intervalID = setInterval(handleTimer, 1000);
 
-    // if (time <= 0) {
-    //   clearInterval(intervalID);
-    // }
-
-    for (var i = 0; i < questions.length; i++) {
-      // console.log(questions[i]);
-      $("#question-header").text(questions[i].question);
-      $("#a-answer").text(questions[i].a);
-      $("#b-answer").text(questions[i].b);
-      $("#c-answer").text(questions[i].c);
-      $("#d-answer").text(questions[i].d);
-
-      //   switch (i) {
-      //     case i === 0:
-      //       $("#question-header").text(questions[0].question);
-      //       $("#a-answer").text(questions[0].a);
-      //       $("#b-answer").text(questions[0].b);
-      //       $("#c-answer").text(questions[0].c);
-      //       $("#d-answer").text(questions[0].d);
-      //       break;
-      //     case i === 1:
-      //       $("#question-header").text(questions[1].question);
-      //       $("#a-answer").text(questions[1].a);
-      //       $("#b-answer").text(questions[1].b);
-      //       $("#c-answer").text(questions[1].c);
-      //       $("#d-answer").text(questions[1].d);
-      //       break;
-      //     case i === 2:
-      //       $("#question-header").text(questions[2].question);
-      //       $("#a-answer").text(questions[2].a);
-      //       $("#b-answer").text(questions[2].b);
-      //       $("#c-answer").text(questions[2].c);
-      //       $("#d-answer").text(questions[2].d);
-      //       break;
-      //     case i === 3:
-      //       $("#question-header").text(questions[3].question);
-      //       $("#a-answer").text(questions[3].a);
-      //       $("#b-answer").text(questions[3].b);
-      //       $("#c-answer").text(questions[3].c);
-      //       $("#d-answer").text(questions[3].d);
-      //       break;
-      //     default:
-      //       break;
-      //   }
-    }
+    appendQuestion();
   });
 
-  // Loop
+  //Local Storage
+
+  $("#save-name").on("click", function (event) {
+    event.preventDefault();
+
+    userName = $("#username").val();
+
+    localStorage.setItem("username", userName);
+    localStorage.setItem("highscores", JSON.stringify(score));
+    $("form").trigger("reset");
+    showScore();
+    console.log(localStorage.getItem("#username"));
+  });
 });

@@ -22,21 +22,37 @@
   <body>
     <br />
     <div class="container">
+      <!--Score and Timer Row-->
       <div class="row">
         <div class="col-md-2">
           <!--Highscore Card-->
-          <h5>Your Score:</h5>
-          <p id="score"></p>
+          <h5>Your Current Score: <span id="score"></span></h5>
+          <br />
+          <h6><strong>Highscores</strong></h6>
+          
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Score</th>
+                </tr>
+              </thead>
+              <tbody id="quiz-score">
+              </tbody>
+            </table>
+          
         </div>
-        <div class="col-md-10">
+        <div class="col-md-8">
           <!-- Timer -->
           <p id="timer" class="text-right"></p>
         </div>
       </div>
       <br />
+      <!-- Start Quiz -->
       <div class="row text-center">
         <div id="start-bar" class="col-md-12">
           <h1>Javascript Quiz</h1>
+          <p>Complete the quiz below and save your score!</p>
           <button id="start-button" class="btn btn-primary text-center">
             Start Quiz!
           </button>
@@ -46,7 +62,6 @@
       <div id="quiz" class="row d-none">
         <div class="offset-md-3 col-md-8 px-5">
           <!-- Quiz Body-->
-          <h1>Javascript Quiz</h1>
           <h3 id="question-header"></h3>
           <li class="pt-2">
             <button
@@ -78,9 +93,33 @@
           </li>
           <hr />
           <p id="result"></p>
-          <button id="pause-timer" class="btn btn-primary">Stop Time</button>
         </div>
       </div>
+      <!-- Save Score Form-->
+      <form class="form-row d-none">
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <h4>You Finished!</h5>
+            <p>Enter your first name below to save your score</p>
+            <input
+              id="username"
+              type="text"
+              class="form-control"
+              placeholder="First name"
+            />
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <button id="save-name" type="submit" class="btn btn-primary mt-2">
+              Save Highscore
+            </button>
+            <button id="reset-quiz" class="btn btn-primary mt-2">
+              Try again?
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
 
     <script src="script.js" type="text/Javascript"></script>
